@@ -1,10 +1,16 @@
 # Detection-aided liver lesion segmentation
 
-Here we present the implementation in TensorFlow of this [work]() accepted in the Machine Learning 4 Health Workshop from NIPS. The original code is from [osvos] (https://github.com/scaelles/OSVOS-TensorFlow). 
+Here we present the implementation in TensorFlow of this [work]() accepted in the Machine Learning 4 Health Workshop from NIPS. The original code is from [OSVOS](https://github.com/scaelles/OSVOS-TensorFlow).
 
-![Architecture of the network](https://github.com/imatge-upc/medical-2017-liver/blob/master/img/architecture.pdf?raw=true)
+![Architecture of the network](https://github.com/imatge-upc/medical-2017-liver/blob/master/img/architecture.png?raw=true)
 
  In this work we propose a method to segment the liver and its lesions from Computed Tomography (CT) scans using Convolutional Neural Networks (CNNs), that have proven good results in a variety of computer vision tasks, including medical imaging. The network that segments the lesions consists of a cascaded architecture, which first focuses on the region of the liver in order to segment the lesions on it. Moreover, we train a detector to localize the lesions, and mask the results of the segmentation network with the positive detections. The segmentation architecture is based on DRIU~\cite{maninis2016deep}, a Fully Convolutional Network (FCN) with side outputs that work on feature maps of different resolutions, to finally  benefit from the multi-scale information learned by different stages of the network. The main contribution of this work is the use of a detector to localize the lesions, which we show to be beneficial to remove false positives triggered by the segmentation network. 
+ 
+ |  ![NIPS 2017 logo][logo-nips]   |  ![ml4h logo][ml4h-logo]  | Paper accepted at [Machine Learning 4 Health Learning Workshop, NIPS 2017](https://ml4health.github.io/2017/index.html)   |
+|:-:|:-:|---|    
+
+[logo-nips]: https://github.com/imatge-upc/medical-2017-liver/blob/master/logos/nips2017?raw=true "NIPS 2017"
+[logo-ml4h]: https://github.com/imatge-upc/medical-2017-liver/blob/master/logos/ml4h.png?raw=true "ML4H Workshop"
 
 A joint collaboration between:
 
@@ -16,18 +22,14 @@ A joint collaboration between:
 [gpi-web]: https://imatge.upc.edu/web/ 
 [bsc-web]: http://www.bsc.es 
 
-[logo-eth]:https://github.com/imatge-upc/detection-2016-nipsws/blob/master/logos/bsc320x86.jpg?raw=true "Barcelona Supercomputing Center"
-[logo-bsc]:https://github.com/imatge-upc/detection-2016-nipsws/blob/master/logos/bsc320x86.jpg?raw=true "Barcelona Supercomputing Center"
-[logo-gpi]: https://github.com/imatge-upc/detection-2016-nipsws/blob/master/logos/gpi320x70.png?raw=true "UPC Image Processing Group"
-[logo-severo]: https://github.com/imatge-upc/detection-2016-nipsws/blob/master/logos/severo_ochoa.png?raw=true "Severo Ochoa"
+[logo-eth]:https://github.com/imatge-upc/medical-2017-liver/blob/master/logos/ethzurich.jpeg?raw=true "ETH Zürich"
+[logo-bsc]:https://github.com/imatge-upc/medical-2017-liver/blob/master/logos/bsc320x86.jpg?raw=true "Barcelona Supercomputing Center"
+[logo-gpi]: https://github.com/imatge-upc/medical-2017-liver/blob/master/logos/gpi320x70.png?raw=true "UPC Image Processing Group"
+[logo-severo]: https://github.com/imatge-upc/medical-2017-liver/blob/master/logos/severo_ochoa.png?raw=true "Severo Ochoa"
 
 | ![Míriam Bellver][bellver-photo]  | ![Kevis-Kokitsi Maninis][maninis-photo]  | ![Jordi Pont-Tuset][pont-photo]  | ![Xavier Giró i Nieto][giro-photo]  | ![Jordi Torres][torres-photo]  |![Luc Van Gool][gool-photo]|
 |:-:|:-:|:-:|:-:|:-:|:-:|
 | [Míriam Bellver][bellver-web] | [Kevis-Kokitsi Maninis][maninis-web]  | [Jordi Pont-Tuset][pont-web] | [Xavier Giro-i-Nieto][giro-web]  |  [Jordi Torres][torres-web] | [Luc Van Gool][gool-web]  |
-
-
-|  ![NIPS 2016 logo][logo-nips] | Paper accepted at [Machine Learning 4 Health Learning Workshop, NIPS 2017](https://ml4health.github.io/2017/index.html)   |
-|:-:|---|      
 
 
 [bellver-web]: https://www.bsc.es/bellver-bueno-miriam
