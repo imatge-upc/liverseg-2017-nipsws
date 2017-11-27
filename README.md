@@ -41,7 +41,7 @@ A joint collaboration between:
 
 [bellver-photo]:  https://github.com/imatge-upc/medical-2017-liver/blob/master/authors/MiriamBellver160x160.jpg?raw=true "Míriam Bellver"
 [maninis-photo]: https://github.com/imatge-upc/medical-2017-liver/blob/master/authors/KManinis160x160.jpg?raw=true "Kevis-Kokitsi Maninis"
-[pont-photo]: https://github.com/imatge-upc/medical-2017-liver/blob/master/authors/JordiPont160x160.jpg?raw=true "Jordi Pont-Tuset"
+[pont-photo]: https://github.com/imatge-upc/medical-2017-liver/blob/master/authors/JordiPont160x160.png?raw=true "Jordi Pont-Tuset"
 [giro-photo]: https://github.com/imatge-upc/medical-2017-liver/blob/master/authors/XavierGiro160x160.jpg?raw=true "Xavier Giró-i-Nieto"
 [torres-photo]: https://github.com/imatge-upc/medical-2017-liver/blob/master/authors/JordiTorres160x160.jpg?raw=true "Jordi Torres"
 [gool-photo]:  https://github.com/imatge-upc/medical-2017-liver/blob/master/authors/lucvangool160x160.jpg?raw=true  "Luc Van Gool"
