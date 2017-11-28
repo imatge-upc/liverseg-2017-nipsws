@@ -125,45 +125,6 @@ python seg_liver_test.py
 
 This network samples locations around liver and detects whether they have a lesion or not. 
 
-**1. Sample locations**
-
-The first step is to sample these locations. We need a .txt with the following format:
-
-```img1 x1 x2 id```
-
-Example:
-
-```images_volumes/97/444 385.0 277.0 1```
-
-```x1``` and ```x2``` are the coordinates of the upper-left vertex of the bounding box and ```id``` is the data augmentation option.  There are two options in this script. To sample locations for slices with ground truth or without. In the first case, two separate lists will be generated, one for positive locations (/w lesion) and another for negative locations (/wo lesion), in order to train the detector with balanced batches. These lists are already generated so you can use them, they are inside det_DatasetList (for instance, training_positive_det_patches_data_aug.txt for the positive patches of training set).
-
-In case you want to generate other lists, use the following script:
-
-```bash
-cd utils/sampling
-python sample_bbs.py
-```
-
-**2. Train lesion detector** 
-
-Once you have sampled the positive and negative locations, or use the default lists, you can use the following command to train the detector.
-
-```bash
-python seg_lesion_train.py
-```
-
-**3. Test lesion detector** 
-
-In order to test the detector, you can use the following command:
-
-```bash
-python seg_lesion_test.py
-```
-
-This will create in the folder detection_results/ a folder with the name of the id given to the experiment, and inside two .txt files, one with the hard results (considering a th of 0.5) and another with soft results with the prob predicted by the detector that a location is unhealthy.
-
-### Lesion segmentation
-
 **1. Crop slices around the liver**
 
 In order to train the algorithm, first we crop the images around the liver region. If you don't have the cropped slices, you can use the following script:
@@ -182,8 +143,47 @@ bb_images_volumes_alldatabase3_gt_nozoom_common_bb
 
 The default version will generate the cropped slices around the liver segmentation mask in the ground truth, but you can change it so that in considers liver predictions.
 
+**2. Sample locations around liver**
 
-**2. Train the lesion model**
+The first step is to sample these locations. We need a .txt with the following format:
+
+```img1 x1 x2 id```
+
+Example:
+
+```images_volumes/97/444 385.0 277.0 1```
+
+```x1``` and ```x2``` are the coordinates of the upper-left vertex of the bounding box and ```id``` is the data augmentation option.  There are two options in this script. To sample locations for slices with ground truth or without. In the first case, two separate lists will be generated, one for positive locations (/w lesion) and another for negative locations (/wo lesion), in order to train the detector with balanced batches. These lists are already generated so you can use them, they are inside det_DatasetList (for instance, training_positive_det_patches_data_aug.txt for the positive patches of training set).
+
+In case you want to generate other lists, use the following script:
+
+```bash
+cd utils/sampling
+python sample_bbs.py
+```
+
+**3. Train lesion detector** 
+
+Once you have sampled the positive and negative locations, or use the default lists, you can use the following command to train the detector.
+
+```bash
+python seg_lesion_train.py
+```
+
+**4. Test lesion detector** 
+
+In order to test the detector, you can use the following command:
+
+```bash
+python seg_lesion_test.py
+```
+
+This will create in the folder detection_results/ a folder with the name of the id given to the experiment, and inside two .txt files, one with the hard results (considering a th of 0.5) and another with soft results with the prob predicted by the detector that a location is unhealthy.
+
+### Lesion segmentation
+
+
+**1. Train the lesion model**
 
 In order to train the algorithm that does not backpropagate through pixels outside the liver, each line of the list.txt file should have the following format.
 
@@ -195,7 +195,7 @@ An example list file is ```seg_DatasetList/training_lesion_commonbb_nobackprop_3
 python seg_lesion_train.py
 ```
 
-**3. Test the lesion model**
+**2. Test the lesion model**
 
 The command to test the network is the following:
 
