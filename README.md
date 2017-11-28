@@ -1,12 +1,16 @@
 # Detection-aided liver lesion segmentation
 
-Here we present the implementation in TensorFlow of this [work]() accepted in the Machine Learning 4 Health Workshop from NIPS. The original code is from [OSVOS](https://github.com/scaelles/OSVOS-TensorFlow).
+Here we present the implementation in TensorFlow of our [work]() about liver lesion segmentation accepted in the Machine Learning 4 Health Workshop from NIPS. Check our [project](https://imatge-upc.github.io/liverseg-2017-nipsws/) page for more information.
+
+**In order to develop this code, we used [OSVOS](https://github.com/scaelles/OSVOS-TensorFlow) and modified it to suit it to the liver lesion segmentation task.** 
 
 ![Architecture of the network](https://github.com/imatge-upc/medical-2017-liver/blob/master/img/architecture.png?raw=true)
 
  In this work we propose a method to segment the liver and its lesions from Computed Tomography (CT) scans using Convolutional Neural Networks (CNNs), that have proven good results in a variety of computer vision tasks, including medical imaging. The network that segments the lesions consists of a cascaded architecture, which first focuses on the region of the liver in order to segment the lesions on it. Moreover, we train a detector to localize the lesions, and mask the results of the segmentation network with the positive detections. The segmentation architecture is based on DRIU~\cite{maninis2016deep}, a Fully Convolutional Network (FCN) with side outputs that work on feature maps of different resolutions, to finally  benefit from the multi-scale information learned by different stages of the network. The main contribution of this work is the use of a detector to localize the lesions, which we show to be beneficial to remove false positives triggered by the segmentation network. 
  
- |  ![NIPS 2017 logo][logo-nips]   |  ![log ml4h][logo-ml4h]  | Paper accepted at [Machine Learning 4 Health Learning Workshop, NIPS 2017](https://ml4health.github.io/2017/index.html)   |
+ This work has been accepted in the Machine Learning 4 Health Workshop:
+ 
+ |  ![NIPS 2017 logo][logo-nips]   |  ![log ml4h][logo-ml4h]  | Paper accepted at [Machine Learning 4 Health Workshop, NIPS 2017](https://ml4health.github.io/2017/index.html)   |
 |:-:|:-:|---|    
 
 [logo-nips]: https://github.com/imatge-upc/medical-2017-liver/blob/master/logos/nips2017.png?raw=true "NIPS 2017"
@@ -27,24 +31,21 @@ A joint collaboration between:
 [logo-gpi]: https://github.com/imatge-upc/medical-2017-liver/blob/master/logos/gpi320x70.png?raw=true "UPC Image Processing Group"
 [logo-severo]: https://github.com/imatge-upc/medical-2017-liver/blob/master/logos/severo_ochoa.png?raw=true "Severo Ochoa"
 
-| ![Míriam Bellver][bellver-photo]  | ![Kevis-Kokitsi Maninis][maninis-photo]  | ![Jordi Pont-Tuset][pont-photo]  | ![Xavier Giró i Nieto][giro-photo]  | ![Jordi Torres][torres-photo]  |![Luc Van Gool][gool-photo]|
+<!--| ![Míriam Bellver][bellver-photo]  | ![Kevis-Kokitsi Maninis][maninis-photo]  | ![Jordi Pont-Tuset][pont-photo]  | ![Xavier Giró i Nieto][giro-photo]  | ![Jordi Torres][torres-photo]  |![Luc Van Gool][gool-photo]|
 |:-:|:-:|:-:|:-:|:-:|:-:|
 | [Míriam Bellver][bellver-web] | [Kevis-Kokitsi Maninis][maninis-web]  | [Jordi Pont-Tuset][pont-web] | [Xavier Giro-i-Nieto][giro-web]  |  [Jordi Torres][torres-web] | [Luc Van Gool][gool-web]  |
-
-
 [bellver-web]: https://www.bsc.es/bellver-bueno-miriam
 [maninis-web]: http://www.vision.ee.ethz.ch/~kmaninis/
 [pont-web]: http://jponttuset.cat/publications/
 [giro-web]: https://imatge.upc.edu/web/people/xavier-giro
 [torres-web]: http://www.jorditorres.org/
 [gool-web]: http://www.vision.ee.ethz.ch/en/members/get_member.cgi?name=vangool&lang=en#
-
 [bellver-photo]:  https://github.com/imatge-upc/medical-2017-liver/blob/master/authors/MiriamBellver160x160.jpg?raw=true "Míriam Bellver"
 [maninis-photo]: https://github.com/imatge-upc/medical-2017-liver/blob/master/authors/KManinis160x160.jpg?raw=true "Kevis-Kokitsi Maninis"
 [pont-photo]: https://github.com/imatge-upc/medical-2017-liver/blob/master/authors/JordiPont160x160.png?raw=true "Jordi Pont-Tuset"
 [giro-photo]: https://github.com/imatge-upc/medical-2017-liver/blob/master/authors/XavierGiro160x160.jpg?raw=true "Xavier Giró-i-Nieto"
 [torres-photo]: https://github.com/imatge-upc/medical-2017-liver/blob/master/authors/JordiTorres160x160.jpg?raw=true "Jordi Torres"
-[gool-photo]:  https://github.com/imatge-upc/medical-2017-liver/blob/master/authors/lucvangool160x160.jpg?raw=true  "Luc Van Gool"
+[gool-photo]:  https://github.com/imatge-upc/medical-2017-liver/blob/master/authors/lucvangool160x160.jpg?raw=true  "Luc Van Gool" -->
 
 
 ## Code Instructions
