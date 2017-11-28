@@ -16,7 +16,7 @@ Here we present the implementation in TensorFlow of our [work]() about liver les
 [logo-nips]: https://github.com/imatge-upc/medical-2017-liver/blob/master/logos/nips2017.png?raw=true "NIPS 2017"
 [logo-ml4h]: https://github.com/imatge-upc/medical-2017-liver/blob/master/logos/ml4h_smaller.png?raw=true "ML4H Workshop"
 
-A joint collaboration between:
+This work is a joint collaboration between:
 
 |![logo-eth]|![logo-bsc]|![logo-gpi]|
 |:-:|:-:|:-:|
