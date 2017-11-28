@@ -82,9 +82,9 @@ This code was developed to participate in the [Liver lesion segmentation challen
 
 Our code expects that the folder that contains the database, has the following structure. It should have the following folders insise:
 
-```images_volumes```: inside there should be a folder for each volume. Inside each of this folders, there are all the .mat files (each matfile corresponds to one slice). The preprocessing is clipping the values outside the range (-150,250) and doing max-min normalization.
-```liver_seg```: the same structure as the previous, but with .png for each mask of the liver (or any other structure you decide)
-```item_seg```: the same structure as the previous, but with .png for each mask of the lesion (or any other structure you decide)
+* ```images_volumes```: inside there should be a folder for each volume. Inside each of this folders, there are all the .mat files (each matfile corresponds to one slice). The preprocessing is clipping the values outside the range (-150,250) and doing max-min normalization.
+* ```liver_seg```: the same structure as the previous, but with .png for each mask of the liver (or any other structure you decide)
+* ```item_seg```: the same structure as the previous, but with .png for each mask of the lesion (or any other structure you decide)
 
 ```
 Database/108/images_volumes/100.mat
