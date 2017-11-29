@@ -8,10 +8,9 @@ import scipy.io
 
 MIN_AREA_SIZE = 512.0*512.0
 
-crops_list_name = 'crops_LiTS_gt.txt'
+crops_list_name = 'crops_LiTS_gt_2.txt'
 
 database_root = '../../LiTS_database/'
-base_root = '../../det_aid_seg/'
 
 utils_path = '../crops_list/'
 results_path = '../../results/'
@@ -43,7 +42,10 @@ if not os.path.exists(output_liver_results_path_bb):
 
 
 def numerical_sort(value):
-    return int(value.split('.')[0].split('/')[-1])
+    return int(value)
+
+def numerical_sort_path(value):
+    return int(value.split('.png')[0].split('/')[-1])
 
 ## If no labels, the masks_folder, should contain the results of liver segmentation
 # masks_folders = os.listdir(results_path + 'liver_seg/')
@@ -59,7 +61,7 @@ for i in range(len(masks_folders)):
         dir_name = masks_folders[i]
         ## If no labels, the masks_folder, should contain the results of liver segmentation
         masks_of_volume = glob.glob(labels_liver_path + dir_name + '/*.png')
-        file_names = (sorted(masks_of_volume, key=numerical_sort))
+        file_names = (sorted(masks_of_volume, key=numerical_sort_path))
         depth_of_volume = len(masks_of_volume)
 
     if not os.path.exists(os.path.join(output_labels_path_bb, dir_name)):
@@ -120,33 +122,33 @@ for i in range(len(masks_folders)):
             zoom = math.sqrt(MIN_AREA_SIZE/area)
             aux = 1
             
-            crops_file.write(file_names[j].split('.')[0].split('liver_seg/')[-1] + ' ' + str(aux) + ' ' +
+            crops_file.write(file_names[j].split('.png')[0].split('liver_seg/')[-1] + ' ' + str(aux) + ' ' +
                              str(total_mina) + ' ' + str(total_maxa) + ' ' + str(total_minb) + ' ' + str(total_maxb) + '\n')
-            original_img = np.array(scipy.io.loadmat(images_path + dir_name + '/' + file_names[j].split('.')[0].split('/')[-1] + '.mat')['section'], dtype = np.float32)
+            original_img = np.array(scipy.io.loadmat(os.path.join(images_path, dir_name, file_names[j].split('.png')[0].split('/')[-1] + '.mat'))['section'], dtype = np.float32)
             o_new = original_img[total_mina:total_maxa, total_minb:total_maxb]
 
-            scipy.io.savemat(output_images_path_bb + dir_name + '/' + file_names[j].split('.')[0].split('/')[-1] + '.mat', mdict={'section': o_new})
+            scipy.io.savemat(os.path.join(output_images_path_bb, dir_name, file_names[j].split('.png')[0].split('/')[-1] + '.mat'), mdict={'section': o_new})
 
             masked_original_img = o_new
             masked_original_img[np.where(new_img == 0)] = 0
            
-            original_label = misc.imread(labels_path + dir_name + '/' + file_names[j].split('.')[0].split('/')[-1] + '.png')
+            original_label = misc.imread(os.path.join(labels_path, dir_name, file_names[j].split('.png')[0].split('/')[-1] + '.png'))
             lbl_new = original_label[total_mina:total_maxa, total_minb:total_maxb]
 
-            misc.imsave(output_labels_path_bb + dir_name + '/' + file_names[j].split('.')[0].split('/')[-1] + '.png', lbl_new)
+            misc.imsave(os.path.join(output_labels_path_bb, dir_name, file_names[j].split('.png')[0].split('/')[-1] + '.png'), lbl_new)
             
-            original_liver_label = misc.imread(labels_liver_path + dir_name + '/' + file_names[j].split('.')[0].split('/')[-1] + '.png')
+            original_liver_label = misc.imread(os.path.join(labels_liver_path, dir_name, file_names[j].split('.png')[0].split('/')[-1] + '.png'))
             lbl_liver_new = original_liver_label[total_mina:total_maxa, total_minb:total_maxb]
 
-            misc.imsave(output_labels_liver_path_bb + dir_name + '/' + file_names[j].split('.')[0].split('/')[-1] + '.png', lbl_liver_new)
+            misc.imsave(os.path.join(output_labels_liver_path_bb, dir_name,  file_names[j].split('.png')[0].split('/')[-1] + '.png'), lbl_liver_new)
 
-            original_results_label = misc.imread(liver_results + dir_name + '/' + file_names[j].split('.')[0].split('/')[-1] + '.png')
+            original_results_label = misc.imread(os.path.join(liver_results, dir_name, file_names[j].split('.png')[0].split('/')[-1] + '.png'))
             res_liver_new = original_results_label[total_mina:total_maxa, total_minb:total_maxb]
 
-            misc.imsave(output_liver_results_path_bb + dir_name + '/' + file_names[j].split('.')[0].split('/')[-1] + '.png', res_liver_new)
+            misc.imsave(os.path.join(output_liver_results_path_bb, dir_name, file_names[j].split('.png')[0].split('/')[-1] + '.png'), res_liver_new)
 
         else:
             aux = 0
-            crops_file.write(file_names[j].split('.')[0].split('liver_seg/')[-1] + ' ' + str(aux) + '\n')
+            crops_file.write(file_names[j].split('.png')[0].split('liver_seg/')[-1]  + ' ' + str(aux) + '\n')
 
 crops_file.close()
