@@ -12,7 +12,7 @@ def sample_bbs_test(crops_list, output_file_name):
     to the data augmentation applied, which is none for test images)
     """
 
-    test_file = open(output_folder_path + output_file_name + '.txt', 'w')
+    test_file = open(os.path.join(output_folder_path, output_file_name + '.txt'), 'w')
 
     if crops_list is not None:
         with open(crops_list) as t:
@@ -30,8 +30,8 @@ def sample_bbs_test(crops_list, output_file_name):
         else:
             id_img, bool_zoom = result
 
-        if bool_zoom == '1' and int(id_img.split('images_volumes/')[-1].split('.')[0].split('/')[0])!= 59:
-            mask_liver = scipy.misc.imread(liver_masks_path + id_img.split('images_volumes/')[-1].split('.')[0] + '.png')/255.0
+        if bool_zoom == '1':
+            mask_liver = scipy.misc.imread(os.path.join(liver_masks_path, id_img.split('images_volumes/')[-1].split('.')[0] + '.png'))/255.0
             mask_liver[mask_liver > 0.5] = 1.0
             mask_liver[mask_liver < 0.5] = 0.0
 
@@ -70,10 +70,10 @@ def sample_bbs_train(crops_list, output_file_name, data_aug_options):
         In total 4 text files will be generated. For training, a positive and a negative file, and the same for testing.
     """
 
-    train_positive_file = open(output_folder_path + 'training_positive_det_patches_' + output_file_name + '.txt', 'w')
-    train_negative_file = open(output_folder_path + 'training_negative_det_patches_' + output_file_name + '.txt', 'w')
-    test_positive_file = open(output_folder_path + 'testing_positive_det_patches_' + output_file_name + '.txt', 'w')
-    test_negative_file = open(output_folder_path + 'testing_negative_det_patches_' + output_file_name + '.txt', 'w')
+    train_positive_file = open(os.path.join(output_folder_path, 'training_positive_det_patches_' + output_file_name + '.txt'), 'w')
+    train_negative_file = open(os.path.join(output_folder_path, 'training_negative_det_patches_' + output_file_name + '.txt'), 'w')
+    test_positive_file = open(os.path.join(output_folder_path, 'testing_positive_det_patches_' + output_file_name + '.txt'), 'w')
+    test_negative_file = open(os.path.join(output_folder_path, 'testing_negative_det_patches_' + output_file_name + '.txt'), 'w')
 
     if crops_list is not None:
         with open(crops_list) as t:
@@ -92,10 +92,10 @@ def sample_bbs_train(crops_list, output_file_name, data_aug_options):
             id_img, bool_zoom = result
             
         if bool_zoom == '1' and int(id_img.split('images_volumes/')[-1].split('.')[0].split('/')[0])!= 59:
-            mask_liver = scipy.misc.imread(liver_masks_path + id_img.split('images_volumes/')[-1].split('.')[0] + '.png')/255.0
+            mask_liver = scipy.misc.imread(os.path.join(liver_masks_path, id_img.split('images_volumes/')[-1].split('.')[0] + '.png'))/255.0
             mask_liver[mask_liver > 0.5] = 1.0
             mask_liver[mask_liver < 0.5] = 0.0
-            mask_lesion = scipy.misc.imread(lesion_masks_path + id_img.split('images_volumes/')[-1].split('.')[0] + '.png')/255.0
+            mask_lesion = scipy.misc.imread(os.path.join(lesion_masks_path, id_img.split('images_volumes/')[-1].split('.')[0] + '.png'))/255.0
             mask_lesion[mask_lesion > 0.5] = 1.0
             mask_lesion[mask_lesion < 0.5] = 0.0
             
@@ -147,19 +147,17 @@ def sample_bbs_train(crops_list, output_file_name, data_aug_options):
 
 if __name__ == "__main__":
 
-    base_root = '/gpfs/scratch/bsc31/bsc31429/'
-    database_root = base_root + 'LiTS_database/'
-    base_root = base_root + 'det_aid_seg/'
+    database_root = '../../LiTS_database/'
 
     # Paths for Own Validation set
-    images_path = database_root + 'images_volumes/'
-    liver_masks_path = database_root + 'liver_seg/'
-    lesion_masks_path = database_root + 'item_seg/'
+    images_path = os.path.join(database_root, 'images_volumes')
+    liver_masks_path = os.path.join(database_root, 'liver_seg')
+    lesion_masks_path = os.path.join(database_root, 'item_seg')
 
-    output_folder_path = base_root + 'det_DatasetList/'
+    output_folder_path =  '../../det_DatasetList/'
 
     # Example of sampling bounding boxes around liver for train images
-    crops_list_sp = base_root + 'utils/crops_list/crops_LiTS_gt.txt'
+    crops_list_sp = '../crops_list/crops_LiTS_gt.txt'
     output_file_name_sp = 'example'
     # all possible combinations of data augmentation
     data_aug_options_sp = 8
@@ -169,13 +167,4 @@ if __name__ == "__main__":
     ## uncomment for using this option
     # output_file_name_sp = 'test_patches'
     # sample_bbs_test(crops_list_sp, output_file_name_sp)
-
-
-
-
-
-
-
-
-
 
