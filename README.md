@@ -62,9 +62,9 @@ a .mat file for each CT slice of the volume. The preprocessing required consists
 An example of the structure for a single slice of a CT volume is the following:
 
 ```
-Database/images_volumes/31/100.mat
-Database/liver_seg/31/100.png
-Database/item_seg/31/100.png
+LiTS_database/images_volumes/31/100.mat
+LiTS_database/liver_seg/31/100.png
+LiTS_database/item_seg/31/100.png
 ```
 
 We provide a file in matlab to convert the nifti files into this same structure. In our case we used this [matlab library](https://ch.mathworks.com/matlabcentral/fileexchange/8797-tools-for-nifti-and-analyze-image). You can use whatever library you decide as long as the file structure and the preprocessing is the same. 
