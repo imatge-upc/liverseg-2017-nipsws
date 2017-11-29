@@ -8,7 +8,7 @@ import scipy.io
 
 MIN_AREA_SIZE = 512.0*512.0
 
-crops_list_name = 'crops_list_ex.txt'
+crops_list_name = 'crops_LiTS_gt.txt'
 
 database_root = '../../LiTS_database/'
 base_root = '../../det_aid_seg/'
@@ -50,7 +50,7 @@ def numerical_sort(value):
 masks_folders = os.listdir(labels_liver_path)
 sorted_mask_folder = sorted(masks_folders, key=numerical_sort)
 
-crops_file = open(os.path.join(utils_path, 'crops_LiTS_gt_ex.txt'), 'w')
+crops_file = open(os.path.join(utils_path, crops_list_name), 'w')
 aux = 0
 
 
