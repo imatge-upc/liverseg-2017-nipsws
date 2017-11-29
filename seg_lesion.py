@@ -457,7 +457,7 @@ def _train(dataset, initial_ckpt, supervison, learning_rate, logs_path, max_trai
         else:
             sys.exit('Incorrect supervision id, select 1 for supervision of the side outputs, 2 for weak supervision '
                      'of the side outputs and 3 for no supervision of the side outputs')
-        total_loss = output_loss+tf.add_n(slim.losses.get_regularization_losses())
+        total_loss = output_loss+tf.add_n(tf.losses.get_regularization_losses())
         tf.summary.scalar('losses/total_loss', total_loss)
 
     # Define optimization method
