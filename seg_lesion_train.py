@@ -32,10 +32,10 @@ boundaries = [10000, 15000, 25000, 30000, 40000]
 values = [ini_learning_rate, ini_learning_rate * 0.1, ini_learning_rate, ini_learning_rate * 0.1, ini_learning_rate,
           ini_learning_rate * 0.1]
 
-task = 'seg_lesion'
+task_name = 'seg_lesion'
 
 database_root =  os.path.join(root_folder, 'LiTS_database')
-logs_path = os.path.join(root_folder, 'train_files', task, 'networks')
+logs_path = os.path.join(root_folder, 'train_files', task_name, 'networks')
 imagenet_ckpt = os.path.join(root_folder, 'train_files', 'vgg_16.ckpt')
 
 train_file = os.path.join(root_folder, 'seg_DatasetList', 'training_lesion_commonbb_nobackprop_3.txt')
