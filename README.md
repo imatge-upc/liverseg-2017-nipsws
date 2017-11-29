@@ -153,7 +153,7 @@ python sample_bbs.py
 Once you sample the positive and negative locations, or decide to use the default lists, you can use the following command to train the detector.
 
 ```bash
-python seg_lesion_train.py
+python det_lesion_train.py
 ```
 
 **4. Test lesion detector** 
@@ -161,7 +161,7 @@ python seg_lesion_train.py
 In order to test the detector, you can use the following command:
 
 ```bash
-python seg_lesion_test.py
+python det_lesion_test.py
 ```
 
 This will create a folder  inside ```detection_results```  with the ```task_name``` given to the experiment, and inside two .txt files, one with the hard results (considering a th of 0.5) and another with soft results with the prob predicted by the detector that a location is unhealthy.
