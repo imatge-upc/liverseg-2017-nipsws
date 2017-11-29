@@ -46,4 +46,4 @@ with tf.Graph().as_default():
         global_step = tf.Variable(0, name='global_step', trainable=False)
         detection.train(dataset, resnet_ckpt, learning_rate, logs_path, max_training_iters, save_step, display_step,
                         global_step, iter_mean_grad=iter_mean_grad, batch_size=batch_size, finetune=0,
-                        resume_training=True)
+                        resume_training=False)
