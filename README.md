@@ -71,7 +71,7 @@ We provide a file in matlab to convert the nifti files into this same structure.
 
 ```bash
 cd /utils/matlab_utils
-matlab process preprocess_database_liver.m
+matlab process_database_liver.m
 ```
 
 ### Liver segmentation
