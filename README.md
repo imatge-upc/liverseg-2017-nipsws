@@ -111,7 +111,8 @@ python compute_3D_bbs_from_gt_liver.py
 
 This will generate three folders:
 
-```bb_liver_seg_alldatabase3_gt_nozoom_common_bb
+```
+bb_liver_seg_alldatabase3_gt_nozoom_common_bb
 bb_liver_lesion_seg_alldatabase3_gt_nozoom_common_bb
 bb_images_volumes_alldatabase3_gt_nozoom_common_bb
 ```
