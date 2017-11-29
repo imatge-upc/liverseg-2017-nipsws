@@ -50,7 +50,7 @@ If you want to train the models by yourself, we provide also the following pretr
 
 ### Data
 
-This code was developed to participate in the [Liver lesion segmentation challenge (LiTS)](https://competitions.codalab.org/competitions/17094), but can be used for other segmentation tasks also. The LiTS database consists on 130 CT scans for training and 70 CT scans for testing. In the training set, we did our own partition, being CT scans with ids lower than 105 being used for training and the remanining for testing. They are compressed in a nifti format. 
+This code was developed to participate in the [Liver lesion segmentation challenge (LiTS)](https://competitions.codalab.org/competitions/17094), but can be used for other segmentation tasks also. The LiTS database consists on 130 CT scans for training and 70 CT scans for testing. These CT scans are compressed in a nifti format. We did our own partition of the training set, we used folders 0 - 104 to train, and 105-130 to test. This code is prepared to do experiments with our partition.
 
 The code expects that the database is inside the ````LiTS_database```` folder. Inside there should be the following folders:
 
@@ -102,7 +102,13 @@ This network samples locations around liver and detects whether they have a lesi
 
 **1. Crop slices around the liver**
 
-In order to train the algorithm, first we crop the images around the liver region. If you don't have the cropped slices, you can use the following script:
+In order to train the lesion detector and the lesion segmentation network, we need to crop the CT scans around the liver region. First, we will need to obtain liver predictions for all the dataset, and move them to the ```LiTS_database``` folder. 
+
+```bash
+cp -rf ./results/seg_liver_ck ./LiTS_database/seg_liver_ck
+```
+
+And the following lines will crop the images from the database, the ground truth and the liver predictions.
 
 ```bash
 cd utils/crops_methods
@@ -112,16 +118,20 @@ python compute_3D_bbs_from_gt_liver.py
 This will generate three folders:
 
 ```
-bb_liver_seg_alldatabase3_gt_nozoom_common_bb
-bb_liver_lesion_seg_alldatabase3_gt_nozoom_common_bb
-bb_images_volumes_alldatabase3_gt_nozoom_common_bb
+LiTS_database/bb_liver_seg_alldatabase3_gt_nozoom_common_bb
+LiTS_database/bb_liver_lesion_seg_alldatabase3_gt_nozoom_common_bb
+LiTS_database/bb_images_volumes_alldatabase3_gt_nozoom_common_bb
+LiTS_database/liver_results
 ```
 
-The default version will generate the cropped slices around the liver segmentation mask in the ground truth, but you can change it so that in considers liver predictions.
+and also a ```./utils/crops_list/crops_LiTS_gt.txt ``` file with the coordinates of the crop.
+
+The default version will crop the images, ground truth, and liver predictions, considering the liver ground truth masks instead of the predictions. You can change this option in the same script.
+
 
 **2. Sample locations around liver**
 
-The first step is to sample these locations. We need a .txt with the following format:
+Now we need to sample locations around the liver region, in order to train and test the lesion detector. We need a .txt with the following format:
 
 ```img1 x1 x2 id```
 
@@ -129,7 +139,7 @@ Example:
 
 ```images_volumes/97/444 385.0 277.0 1```
 
-```x1``` and ```x2``` are the coordinates of the upper-left vertex of the bounding box and ```id``` is the data augmentation option.  There are two options in this script. To sample locations for slices with ground truth or without. In the first case, two separate lists will be generated, one for positive locations (/w lesion) and another for negative locations (/wo lesion), in order to train the detector with balanced batches. These lists are already generated so you can use them, they are inside ```det_DatasetList``` (for instance, ```training_positive_det_patches_data_aug.txt``` for the positive patches of training set).
+whre ```x1``` and ```x2``` are the coordinates of the upper-left vertex of the bounding box and ```id``` is the data augmentation option.  There are two options in this script. To sample locations for slices with ground truth or without. In the first case, two separate lists will be generated, one for positive locations (/w lesion) and another for negative locations (/wo lesion), in order to train the detector with balanced batches. These lists are already generated so you can use them, they are inside ```det_DatasetList``` (for instance, ```training_positive_det_patches_data_aug.txt``` for the positive patches of training set).
 
 In case you want to generate other lists, use the following script:
 
@@ -140,7 +150,7 @@ python sample_bbs.py
 
 **3. Train lesion detector** 
 
-Once you have sampled the positive and negative locations, or use the default lists, you can use the following command to train the detector.
+Once you sample the positive and negative locations, or decide to use the default lists, you can use the following command to train the detector.
 
 ```bash
 python seg_lesion_train.py
@@ -154,18 +164,19 @@ In order to test the detector, you can use the following command:
 python seg_lesion_test.py
 ```
 
-This will create in the folder ```detection_results``` a folder with the name of the id given to the experiment, and inside two .txt files, one with the hard results (considering a th of 0.5) and another with soft results with the prob predicted by the detector that a location is unhealthy.
+This will create a folder  inside ```detection_results```  with the ```task_name``` given to the experiment, and inside two .txt files, one with the hard results (considering a th of 0.5) and another with soft results with the prob predicted by the detector that a location is unhealthy.
 
 ### Lesion segmentation
 
+This is the network that segments the lesion. It is trained just backpropagatins gradients through the liver region.
 
 **1. Train the lesion model**
 
-In order to train the algorithm that does not backpropagate through pixels outside the liver, each line of the list.txt file should have the following format.
+In order to train the algorithm that does not backpropagate through pixels outside the liver, each line of the .txt list file in this case should have the following format:
 
 ```img1 seg_lesion1 seg_liver1 result_liver1 img2 seg_lesion2 seg_liver2 result_liver1 img3 seg_lesion3 seg_liver3 result_liver1 ```
 
-An example list file is ```seg_DatasetList/training_lesion_commonbb_nobackprop_3.txt```. If you used the folder structure proposed in the Database section, and you have named the folders of the cropped slices as proposed in the ```compute_3D_bbs_from_gt_liver.py``` file, you can use the ```seg_DatasetList/training_lesion_commonbb_nobackprop_3.txt``` and the one for testing. 
+An example list file is ```seg_DatasetList/training_lesion_commonbb_nobackprop_3.txt```. If you used the folder structure proposed in the Database section, and you have named the folders of the cropped slices as proposed in the ```compute_3D_bbs_from_gt_liver.py``` file, you can use these files for training and testing the algorithm with the following command:
 
 ```bash
 python seg_lesion_train.py
@@ -179,11 +190,11 @@ The command to test the network is the following:
 python seg_lesion_test.py
 ```
 
-In this case, observe that the script does 4 different steps
-1. Do inference with the network
-2. Return results to the original size (from cropped slices to 512x512)
-3. Mask the results with the liver segmentation masks 
-4. Check positive detections of lesions in the liver. Remove those false positive of the segmentation network using the detection results.  (You need the detection results, obtained in the next point!)
+In this case, observe that the script does 4 different steps:
+1. Does inference with the lesion segmentation network
+2. Returns results to the original size (from cropped slices to 512x512)
+3. Masks the results with the liver segmentation masks 
+4. Checks positive detections of lesions in the liver. Remove those false positive of the segmentation network using the detection results. 
 
 
 ## Contact
