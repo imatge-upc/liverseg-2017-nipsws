@@ -253,7 +253,7 @@ def train(dataset, initial_ckpt, learning_rate, logs_path, max_training_iters, s
     # Define loss
     with tf.name_scope('losses'):
         loss, output, target = binary_cross_entropy(net, input_label)
-        total_loss = loss + tf.add_n(tf.losses.get_regularization_losses)
+        total_loss = loss + tf.add_n(tf.losses.get_regularization_losses())
         tf.summary.scalar('losses/total_loss', total_loss)
         tf.summary.histogram('losses/output', output)
         tf.summary.histogram('losses/target', target)
