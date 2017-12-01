@@ -1,6 +1,6 @@
 # Detection-aided liver lesion segmentation
 
-Here we present the implementation in TensorFlow of our [work]() about liver lesion segmentation accepted in the [Machine Learning 4 Health Workshop](https://ml4health.github.io/2017/) of NIPS 2017. Check our [project](https://imatge-upc.github.io/liverseg-2017-nipsws/) page for more information.
+Here we present the implementation in TensorFlow of our [work](https://arxiv.org/abs/1711.11069) about liver lesion segmentation accepted in the [Machine Learning 4 Health Workshop](https://ml4health.github.io/2017/) of NIPS 2017. Check our [project](https://imatge-upc.github.io/liverseg-2017-nipsws/) page for more information.
 
 **In order to develop this code, we used [OSVOS](https://github.com/scaelles/OSVOS-TensorFlow) and modified it to suit it to the liver lesion segmentation task.** 
 
@@ -8,16 +8,14 @@ Here we present the implementation in TensorFlow of our [work]() about liver les
 
  In this work we propose a method to segment the liver and its lesions from Computed Tomography (CT) scans using Convolutional Neural Networks (CNNs), that have proven good results in a variety of computer vision tasks, including medical imaging. The network that segments the lesions consists of a cascaded architecture, which first focuses on the region of the liver in order to segment the lesions on it. Moreover, we train a detector to localize the lesions, and mask the results of the segmentation network with the positive detections. The segmentation architecture is based on DRIU(Maninis, 2016), a Fully Convolutional Network (FCN) with side outputs that work on feature maps of different resolutions, to finally  benefit from the multi-scale information learned by different stages of the network. The main contribution of this work is the use of a detector to localize the lesions, which we show to be beneficial to remove false positives triggered by the segmentation network. 
  
+Our workshop paper is available on [arXiv](https://arxiv.org/abs/1711.11069), and related slides [here](https://www.slideshare.net/xavigiro/detectionaided-liver-lesion-segmentation-using-deep-learning).
 
-## Publication
-
-Our workshop paper is available on [arXiv](), and related slides [here](https://www.slideshare.net/xavigiro/detectionaided-liver-lesion-segmentation-using-deep-learning).
-
+<!--## Publication
 If you find this code useful, please cite with the following Bibtex code:
-
 ````
 to-be-published
 ````
+-->
 
 
 ## Code Instructions
