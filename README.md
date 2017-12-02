@@ -10,13 +10,15 @@ Here we present the implementation in TensorFlow of our [work](https://arxiv.org
  
 Our workshop paper is available on [arXiv](https://arxiv.org/abs/1711.11069), and related slides [here](https://www.slideshare.net/xavigiro/detectionaided-liver-lesion-segmentation-using-deep-learning).
 
-<!--## Publication
 If you find this code useful, please cite with the following Bibtex code:
 ````
-to-be-published
+@misc{1711.11069,
+Author = {Miriam Bellver and Kevis-Kokitsi Maninis and Jordi Pont-Tuset and Xavier Giro-i-Nieto and Jordi Torres and Luc Van Gool},
+Title = {Detection-aided liver lesion segmentation using deep learning},
+Year = {2017},
+Eprint = {arXiv:1711.11069},
+}
 ````
--->
-
 
 ## Code Instructions
 
