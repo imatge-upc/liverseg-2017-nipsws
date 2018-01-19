@@ -116,7 +116,6 @@ def preprocess_img(image, x_bb, y_bb, ids=None):
             images[j].append(crop)
     in_ = np.array(images)
     in_ = in_.transpose((0,2,3,1))
-    in_ = in_[:, :, ::-1]
     in_ = np.subtract(in_, np.array((104.00699, 116.66877, 122.67892), dtype=np.float32))
 
     return in_
@@ -140,7 +139,6 @@ def preprocess_labels(label):
             
     label = np.array(labels[0])
     label = label.transpose((1,2,0))
-    label = label[:, :, ::-1]
     max_mask = np.max(label) * 0.5
     label = np.greater(label, max_mask)
     label = np.expand_dims(label, axis=0)
