@@ -191,7 +191,6 @@ def preprocess_img(image, number_slices):
                 images[j].append(np.array(scipy.io.loadmat(image[0][0])['section'], dtype=np.float32))
     in_ = np.array(images[0])
     in_ = in_.transpose((1, 2, 0))
-    in_ = in_[:, :, ::-1]
     in_ = np.expand_dims(in_, axis=0)
 
     return in_
