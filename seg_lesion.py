@@ -359,15 +359,6 @@ def parameter_lr():
     vars_corresp['seg_lesion/conv4_3_16/biases'] = 2
     vars_corresp['seg_lesion/conv5_3_16/weights'] = 1
     vars_corresp['seg_lesion/conv5_3_16/biases'] = 2
-    
-    vars_corresp['seg_lesion/conv3d_1/weights'] = 1
-    vars_corresp['seg_lesion/conv3d_1/biases'] = 2
-    vars_corresp['seg_lesion/conv3d_2/weights'] = 1
-    vars_corresp['seg_lesion/conv3d_2/biases'] = 2
-    vars_corresp['seg_lesion/conv3d_3/weights'] = 1
-    vars_corresp['seg_lesion/conv3d_3/biases'] = 2
-    vars_corresp['seg_lesion/conv3d_4/weights'] = 1
-    vars_corresp['seg_lesion/conv3d_4/biases'] = 2
 
     vars_corresp['seg_lesion/score-dsn_2/weights'] = 0.1
     vars_corresp['seg_lesion/score-dsn_2/biases'] = 0.2
