@@ -1,0 +1,9 @@
+# virtual environment in python 2.7
+pip install virtualenv
+virtualenv -p path/to/PYTHONEXE2.7 MyVenv
+
+# tensorflow r1.0 for python 2.7
+python -m pip install --upgrade https://storage.googleapis.com/tensorflow/mac/cpu/tensorflow-1.12.0-py2-none-any.whl
+
+# dependencies
+pip install pillow numpy scipy
