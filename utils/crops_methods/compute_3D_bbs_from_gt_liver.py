@@ -122,6 +122,7 @@ for i in range(len(masks_folders)):
             zoom = math.sqrt(MIN_AREA_SIZE/area)
             aux = 1
             
+            ## Starts writing the crops file that goes into the BB file.
             crops_file.write(file_names[j].split('.png')[0].split('liver_seg/')[-1] + ' ' + str(aux) + ' ' +
                              str(total_mina) + ' ' + str(total_maxa) + ' ' + str(total_minb) + ' ' + str(total_maxb) + '\n')
             original_img = np.array(scipy.io.loadmat(os.path.join(images_path, dir_name, file_names[j].split('.png')[0].split('/')[-1] + '.mat'))['section'], dtype = np.float32)
