@@ -34,9 +34,6 @@ for bb_path in bb_paths:
     if not os.path.exists(bb_path):
         os.makedirs(bb_path)
 
-def numerical_sort_path(value):
-    return int(value.split('.png')[0].split('/')[-1])
-
 ## If no labels, the masks_folder should contain the results of liver segmentation
 # masks_folders = os.listdir(results_path + 'liver_seg/')
 masks_folders = os.listdir(labels_liver_path)
@@ -45,13 +42,14 @@ sorted_mask_folder = sorted(masks_folders, key=lambda x: int(x))
 crops_file = open(os.path.join(utils_path, crops_list_name), 'w')
 aux = 0
 
+sort_by_path = lambda x: int(os.path.splitext(os.path.basename(x))[0])
 
 for i in range(len(masks_folders)):
     if not masks_folders[i].startswith(('.', '\t')):
         dir_name = masks_folders[i]
         ## If no labels, the masks_folder, should contain the results of liver segmentation
         masks_of_volume = glob.glob(labels_liver_path + dir_name + '/*.png')
-        file_names = (sorted(masks_of_volume, key=numerical_sort_path))
+        file_names = (sorted(masks_of_volume, key=sort_by_path))
         depth_of_volume = len(masks_of_volume)
 
     bb_paths = [output_labels_path_bb, output_images_path_bb, output_labels_liver_path_bb, output_liver_results_path_bb]
