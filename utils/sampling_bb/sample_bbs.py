@@ -22,7 +22,7 @@ def sample_bbs_test(crops_list, output_file_name):
         result = crops_lines[i].split(' ')
 
         if len(result) > 2:
-            id_img, bool_zoom, mina, maxa, minb, maxb = result
+            id_img, bool_zoom, mina, maxa, minb, maxb = result # parsed line from txt file
             mina = int(mina)
             maxa = int(maxa)
             minb = int(minb)
@@ -31,31 +31,43 @@ def sample_bbs_test(crops_list, output_file_name):
             id_img, bool_zoom = result
 
         if bool_zoom == '1':
-            mask_liver = scipy.misc.imread(os.path.join(liver_masks_path, id_img.split('images_volumes/')[-1].split('.')[0] + '.png'))/255.0
+
+            # constants
+            file = id_img.split('images_volumes/')[-1]
+            mask_filename = file.split('.')[0]
+
+            # binarize liver mask
+            mask_liver = scipy.misc.imread(os.path.join(liver_masks_path, mask_filename + '.png'))/255.0
             mask_liver[mask_liver > 0.5] = 1.0
             mask_liver[mask_liver < 0.5] = 0.0
 
-            if mina > 25.0:
-                mina = mina - 25.0
-            if minb > 25.0:
-                minb = minb - 25.0
-            if maxb + 25.0 < 512.0:
-                maxb = maxb + 25.0
-            if maxa + 25.0 < 512.0:
-                maxa = maxa + 25.0
+            # add padding
 
-            max_bbs_a = int((maxa-mina)/50.0)
-            max_bbs_b = int((maxb-minb)/50.0)
+            padding = 25.0
+
+            if mina > padding:
+                mina = mina - padding
+            if minb > padding:
+                minb = minb - padding
+            if maxb + padding < 512.0:
+                maxb = maxb + 25.0
+            if maxa + padding < 512.0:
+                maxa = maxa + padding
+
+            mult = 50.0
+
+            max_bbs_a = int((maxa-mina)/mult)
+            max_bbs_b = int((maxb-minb)/mult)
 
             for x in range (0, max_bbs_a):
                 for y in range (0, max_bbs_b):
-                    mask_liver_aux = mask_liver[int(mina + 50.0*x):int(mina + (x+1)*50.0), int(minb + y*50.0):int(minb + (y+1)*50.0)]
+                    mask_liver_aux = mask_liver[int(mina + mult*x):int(mina + (x+1)*mult), int(minb + y*mult):int(minb + (y+1)*mult)]
                     pos_liver = np.sum(mask_liver_aux)
                     if pos_liver > (25.0*25.0):
-                        if (mina + 50.0*x) > 15.0 and ((mina + (x+1)*50.0) < 512.0) and (minb + y*50.0) > 15.0 and ((minb + (y+1)*50.0) < 512.0):
-                            a1 = mina + 50.0*x - 15.0
-                            b1 = minb + y*50.0 - 15.0
-                        test_file.write('images_volumes' + '/' + id_img.split('images_volumes/')[-1] + ' ' + str(a1) + ' ' + str(b1) + ' ' + str(1) +  ' ' + '\n')
+                        if (mina + mult*x) > 15.0 and ((mina + (x+1)*mult) < 512.0) and (minb + y*mult) > 15.0 and ((minb + (y+1)*mult) < 512.0):
+                            a1 = mina + mult*x - 15.0
+                            b1 = minb + y*mult - 15.0
+                        test_file.write(f'images_volumes/{file} {a1} {b1} 1 \n')
     test_file.close()
 
 
@@ -75,6 +87,7 @@ def sample_bbs_train(crops_list, output_file_name, data_aug_options):
     test_positive_file = open(os.path.join(output_folder_path, 'testing_positive_det_patches_' + output_file_name + '.txt'), 'w')
     test_negative_file = open(os.path.join(output_folder_path, 'testing_negative_det_patches_' + output_file_name + '.txt'), 'w')
 
+    # read in bbs from txt file
     if crops_list is not None:
         with open(crops_list) as t:
             crops_lines = t.readlines()
@@ -91,53 +104,71 @@ def sample_bbs_train(crops_list, output_file_name, data_aug_options):
         else:
             id_img, bool_zoom = result
             
-        if bool_zoom == '1' and int(id_img.split('images_volumes/')[-1].split('.')[0].split('/')[0])!= 59:
-            mask_liver = scipy.misc.imread(os.path.join(liver_masks_path, id_img.split('images_volumes/')[-1].split('.')[0] + '.png'))/255.0
+    
+        if bool_zoom == '1' and int(mask_filename.split('/')[0])!= 59:
+
+            # constants
+            mask_filename = id_img.split('images_volumes/')[-1].split('.')[0]
+            liver_seg_file = id_img.split('liver_seg/')[-1]
+
+            # binarize masks
+
+            # liver
+            mask_liver = scipy.misc.imread(os.path.join(liver_masks_path, mask_filename + '.png'))/255.0
             mask_liver[mask_liver > 0.5] = 1.0
             mask_liver[mask_liver < 0.5] = 0.0
-            mask_lesion = scipy.misc.imread(os.path.join(lesion_masks_path, id_img.split('images_volumes/')[-1].split('.')[0] + '.png'))/255.0
+
+            # lesion
+            mask_lesion = scipy.misc.imread(os.path.join(lesion_masks_path, mask_filename + '.png'))/255.0
             mask_lesion[mask_lesion > 0.5] = 1.0
             mask_lesion[mask_lesion < 0.5] = 0.0
             
             if 1:
-                if mina > 25.0:
-                    mina = mina - 25.0
-                if minb > 25.0:
-                    minb = minb - 25.0
-                if maxb + 25.0 < 512.0:
-                    maxb = maxb + 25.0
-                if maxa + 25.0 < 512.0:
-                    maxa = maxa + 25.0
+
+                # add padding
+
+                padding = 25.0
+
+                if mina > padding:
+                    mina = mina - padding
+                if minb > padding:
+                    minb = minb - padding
+                if maxb + padding < 512.0:
+                    maxb = maxb + padding
+                if maxa + padding < 512.0:
+                    maxa = maxa + padding
+
+                mult = 50.0
                     
-                max_bbs_a = int((maxa-mina)/50.0)
-                max_bbs_b = int((maxb-minb)/50.0)
+                max_bbs_a = int((maxa-mina)/mult)
+                max_bbs_b = int((maxb-minb)/mult)
                 
                 for x in range (0, max_bbs_a):
                     for y in range (0, max_bbs_b):
-                        bb = np.array([int(mina + x*50.0), int(mina + (x+1)*50.0), int(minb + y*50.0), int(minb + (y+1)*50.0)])
-                        mask_liver_aux = mask_liver[int(mina + 50.0*x):int(mina + (x+1)*50.0), int(minb + y*50.0):int(minb + (y+1)*50.0)]
+                        bb = np.array([int(mina + x*mult), int(mina + (x+1)*mult), int(minb + y*mult), int(minb + (y+1)*mult)])
+                        mask_liver_aux = mask_liver[int(mina + mult*x):int(mina + (x+1)*mult), int(minb + y*mult):int(minb + (y+1)*mult)]
                         pos_liver = np.sum(mask_liver_aux)
                         if pos_liver > (25.0*25.0):
-                            mask_lesion_aux = mask_lesion[int(mina + 50.0*x):int(mina + (x+1)*50.0), int(minb + y*50.0):int(minb + (y+1)*50.0)]
+                            mask_lesion_aux = mask_lesion[int(mina + mult*x):int(mina + (x+1)*mult), int(minb + y*mult):int(minb + (y+1)*mult)]
                             pos_lesion = np.sum(mask_lesion_aux)
-                            if (mina + 50.0*x) > 15.0 and ((mina + (x+1)*50.0) < 490.0) and (minb + y*50.0) > 15.0 and ((minb + (y+1)*50.0) < 490.0):
-                                a1 = mina + 50.0*x - 15.0
-                                b1 = minb + y*50.0 - 15.0
-                                if pos_lesion > 50.0:
-                                    if int(id_img.split('liver_seg/')[-1].split('/')[-2]) < 105:
+                            if (mina + mult*x) > 15.0 and ((mina + (x+1)*mult) < 490.0) and (minb + y*mult) > 15.0 and ((minb + (y+1)*mult) < 490.0):
+                                a1 = mina + mult*x - 15.0
+                                b1 = minb + y*mult - 15.0
+                                if pos_lesion > mult:
+                                    if int(liver_seg_file.split('/')[-2]) < 105:
                                         for j in range(data_aug_options):
-                                            train_positive_file.write('images_volumes' + '/' + id_img.split('liver_seg/')[-1] + ' ' + str(a1) + ' ' + str(b1) + ' ' + str(j+1) +  ' ' + '\n')
+                                            train_positive_file.write(f'images_volumes/{liver_seg_file} {a1} {b1} {j+1} \n')
                                     else:
                                         for j in range(1):
-                                            test_positive_file.write('images_volumes' + '/' + id_img.split('liver_seg/')[-1] + ' ' + str(a1) + ' ' + str(b1) + ' ' + str(j+1) + ' ' + '\n')
+                                            test_positive_file.write(f'images_volumes/{liver_seg_file} {a1} {b1} {j+1} \n')
 
                                 else:
-                                    if int(id_img.split('liver_seg/')[-1].split('/')[-2]) < 105:
+                                    if int(liver_seg_file.split('/')[-2]) < 105:
                                         for j in range(data_aug_options):
-                                            train_negative_file.write('images_volumes' + '/' + id_img.split('liver_seg/')[-1] + ' ' + str(a1) + ' ' + str(b1) + ' ' + str(j+1) +  ' ' + '\n')
+                                            train_negative_file.write(f'images_volumes/{liver_seg_file} {a1} {b1} {j+1} \n')
                                     else:
                                         for j in range(1):
-                                            test_negative_file.write('images_volumes' + '/' + id_img.split('liver_seg/')[-1] + ' ' + str(a1) + ' ' + str(b1) + ' ' + str(j+1) +  ' ' + '\n')
+                                            test_negative_file.write(f'images_volumes/{liver_seg_file} {a1} {b1} {j+1} \n')
 
     train_positive_file.close()
     train_negative_file.close()
