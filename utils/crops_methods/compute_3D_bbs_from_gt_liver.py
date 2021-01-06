@@ -8,9 +8,10 @@ import scipy.io
 
 MIN_AREA_SIZE = 512.0*512.0
 
+## this file is generated at the end 
 crops_list_name = 'crops_LiTS_gt_2.txt'
 
-database_root = '../../LiTS_database/'
+database_root = '../../predict_database/'
 
 utils_path = '../crops_list/'
 results_path = '../../results/'
@@ -36,7 +37,7 @@ for bb_path in bb_paths:
 
 ## If no labels, the masks_folder should contain the results of liver segmentation
 # masks_folders = os.listdir(results_path + 'liver_seg/')
-masks_folders = os.listdir(labels_liver_path)
+masks_folders = os.listdir(labels_liver_path) # liver seg
 sorted_mask_folder = sorted(masks_folders, key=lambda x: int(x))
 
 crops_file = open(os.path.join(utils_path, crops_list_name), 'w')
@@ -56,7 +57,7 @@ for i in range(len(masks_folders)):
     
     for bb_path in bb_paths:
         if not os.path.exists(os.path.join(bb_path, dir_name)):
-            os.makedirs(os.path.join(bb_paths, dir_name))
+            os.makedirs(os.path.join(bb_path, dir_name))
 
         
     total_maxa = 0
@@ -100,6 +101,14 @@ for i in range(len(masks_folders)):
 
             new_img = img[total_mina:total_maxa, total_minb:total_maxb]
 
+        # elements of txt line
+        current_file_path = file_names[j].split('.png')[0]
+        current_file = os.path.basename(os.path.splitext(current_file_path)[0])
+        print("current file ->",current_file)
+        png = current_file.split('/')[-1] + '.png'
+        mat = current_file.split('/')[-1] + '.mat'
+        liver_seg = current_file.split('liver_seg/')[-1]
+
         if len(np.where(img == 1)[0]) > 500:
 
             # constants
@@ -107,19 +116,17 @@ for i in range(len(masks_folders)):
             zoom = math.sqrt(MIN_AREA_SIZE/area)
             aux = 1
 
-            # elements of txt line
-            current_file = file_names[j].split('.png')[0]
-            png = current_file.split('/')[-1] + '.png'
-            mat = current_file.split('/')[-1] + '.mat'
-            liver_seg = current_file.split('liver_seg/')[-1]
+            
 
             # write to crops txt file
             line = ' '.join([str(x) for x in [liver_seg, aux, total_mina, total_maxa, total_minb, total_maxb]])
             crops_file.write(line + '\n')
 
             ######### apply 3Dbb to files ##########
-
-
+            print("images_path",images_path)
+            print("dir_name", dir_name)
+            print("mat", mat)
+            print("png", png)
             # .mat
             original_img = np.array(scipy.io.loadmat(os.path.join(images_path, dir_name, mat))['section'], dtype = np.float32)
             o_new = original_img[total_mina:total_maxa, total_minb:total_maxb]

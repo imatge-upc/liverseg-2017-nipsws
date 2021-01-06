@@ -20,7 +20,7 @@ number_slices = 3
 
 task_name = 'seg_liver_ck'
 
-database_root = os.path.join(root_folder, 'LiTS_database')
+database_root = os.path.join(root_folder, 'LiTS_database') ## predict_database for patient 105
 logs_path = os.path.join(root_folder, 'train_files', task_name, 'networks')
 result_root = os.path.join(root_folder, 'results')
 model_name = os.path.join(logs_path, "seg_liver.ckpt")
