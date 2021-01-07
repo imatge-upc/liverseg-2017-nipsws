@@ -101,3 +101,12 @@ ENV/
 .mypy_cache/
 *.mat
 *.png
+
+# macOS files
+.DS_Store
+*.DS_Store
+utils/.DS_Store
+
+# dataset
+*.nii
+.vscode/settings.json
