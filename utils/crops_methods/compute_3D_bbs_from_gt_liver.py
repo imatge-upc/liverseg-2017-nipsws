@@ -11,7 +11,7 @@ MIN_AREA_SIZE = 512.0*512.0
 ## this file is generated at the end 
 crops_list_name = 'crops_LiTS_gt_2.txt'
 
-database_root = '../../predict_database/'
+database_root = '../../LiTS_database/'
 
 utils_path = '../crops_list/'
 results_path = '../../results/'
@@ -35,10 +35,14 @@ for bb_path in bb_paths:
     if not os.path.exists(bb_path):
         os.makedirs(bb_path)
 
+def integerise(value):
+    if value != '.DS_Store':
+        return int(value)
+
 ## If no labels, the masks_folder should contain the results of liver segmentation
 # masks_folders = os.listdir(results_path + 'liver_seg/')
 masks_folders = os.listdir(labels_liver_path) # liver seg
-sorted_mask_folder = sorted(masks_folders, key=lambda x: int(x))
+sorted_mask_folder = sorted(masks_folders, key=integerise)
 
 crops_file = open(os.path.join(utils_path, crops_list_name), 'w')
 aux = 0

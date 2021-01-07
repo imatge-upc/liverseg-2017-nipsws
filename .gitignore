@@ -110,3 +110,6 @@ utils/.DS_Store
 # dataset
 *.nii
 .vscode/settings.json
+
+# Rishyak Env
+MyEnv/*
