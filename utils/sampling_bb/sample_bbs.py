@@ -41,7 +41,7 @@ def sample_bbs_test(crops_list, output_file_name):
             mask_liver[mask_liver > 0.5] = 1.0
             mask_liver[mask_liver < 0.5] = 0.0
 
-            # add padding
+            # add padding to the bounding box
 
             padding = 25.0
 
@@ -104,12 +104,11 @@ def sample_bbs_train(crops_list, output_file_name, data_aug_options):
         else:
             id_img, bool_zoom = result
             
-    
+        # constants
+        mask_filename = id_img.split('images_volumes/')[-1].split('.')[0]
+        liver_seg_file = id_img.split('liver_seg/')[-1]
+        
         if bool_zoom == '1' and int(mask_filename.split('/')[0])!= 59:
-
-            # constants
-            mask_filename = id_img.split('images_volumes/')[-1].split('.')[0]
-            liver_seg_file = id_img.split('liver_seg/')[-1]
 
             # binarize masks
 
@@ -139,7 +138,7 @@ def sample_bbs_train(crops_list, output_file_name, data_aug_options):
                     maxa = maxa + padding
 
                 mult = 50.0
-                    
+                    ## calulated by average
                 max_bbs_a = int((maxa-mina)/mult)
                 max_bbs_b = int((maxb-minb)/mult)
                 
@@ -192,10 +191,10 @@ if __name__ == "__main__":
     output_file_name_sp = 'example'
     # all possible combinations of data augmentation
     data_aug_options_sp = 8
-    sample_bbs_train(crops_list_sp, output_file_name_sp, data_aug_options_sp)
+    #sample_bbs_train(crops_list_sp, output_file_name_sp, data_aug_options_sp)
 
     ## Example of sampling bounding boxes around liver for tests images, when there are no labels
     ## uncomment for using this option
     # output_file_name_sp = 'test_patches'
-    # sample_bbs_test(crops_list_sp, output_file_name_sp)
+    sample_bbs_test(crops_list_sp, output_file_name_sp)
 

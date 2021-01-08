@@ -101,3 +101,17 @@ ENV/
 .mypy_cache/
 *.mat
 *.png
+*.txt
+*.ckpt
+train_files/det_lesion_ck/networks/checkpoint
+train_files/det_lesion_ck/networks/det_lesion.ckpt.data-00000-of-00001
+train_files/det_lesion_ck/networks/det_lesion.ckpt.index
+train_files/det_lesion_ck/networks/det_lesion.ckpt.meta
+train_files/seg_lesion_ck/networks/checkpoint
+train_files/seg_lesion_ck/networks/seg_lesion.ckpt.data-00000-of-00001
+train_files/seg_lesion_ck/networks/seg_lesion.ckpt.index
+train_files/seg_lesion_ck/networks/seg_lesion.ckpt.meta
+train_files/seg_liver_ck/networks/checkpoint
+train_files/seg_liver_ck/networks/seg_liver.ckpt.data-00000-of-00001
+train_files/seg_liver_ck/networks/seg_liver.ckpt.index
+train_files/seg_liver_ck/networks/seg_liver.ckpt.meta
