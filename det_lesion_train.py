@@ -11,10 +11,9 @@ import os
 import sys
 import tensorflow as tf
 slim = tf.contrib.slim
-root_folder = os.path.dirname(os.path.realpath(__file__))
-sys.path.append(os.path.abspath(root_folder))
 import det_lesion as detection
 from dataset.dataset_det_data_aug import Dataset
+from config import Config
 
 gpu_id = 0
 
@@ -28,9 +27,13 @@ learning_rate = 0.01
 
 task_name = 'det_lesion'
 
-database_root = os.path.join(root_folder, 'LiTS_database')
-logs_path = os.path.join(root_folder, 'train_files', task_name, 'networks')
-resnet_ckpt = os.path.join(root_folder, 'train_files', 'resnet_v1_50.ckpt')
+### config constants ###
+config = Config()
+database_root = config.database_root
+logs_path = config.get_log(task_name)
+root_folder = config.root_folder
+resnet_ckpt = config.resnet_ckpt
+###
 
 train_file_pos = os.path.join(root_folder, 'det_DatasetList', 'training_positive_det_patches_data_aug.txt')
 train_file_neg = os.path.join(root_folder, 'det_DatasetList', 'training_negative_det_patches_data_aug.txt')

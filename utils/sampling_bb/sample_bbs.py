@@ -198,4 +198,3 @@ if __name__ == "__main__":
     ## uncomment for using this option
     # output_file_name_sp = 'test_patches'
     # sample_bbs_test(crops_list_sp, output_file_name_sp)
-

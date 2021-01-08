@@ -10,11 +10,9 @@ import os
 import sys
 import tensorflow as tf
 slim = tf.contrib.slim
-
-root_folder = os.path.dirname(os.path.realpath(__file__))
-sys.path.append(os.path.abspath(root_folder))
 import seg_lesion as segmentation
 from dataset.dataset_seg_BPliver import Dataset
+from config import Config
 
 gpu_id = 0
 number_slices = 3
@@ -34,9 +32,13 @@ values = [ini_learning_rate, ini_learning_rate * 0.1, ini_learning_rate, ini_lea
 
 task_name = 'seg_lesion'
 
-database_root =  os.path.join(root_folder, 'LiTS_database')
-logs_path = os.path.join(root_folder, 'train_files', task_name, 'networks')
-imagenet_ckpt = os.path.join(root_folder, 'train_files', 'vgg_16.ckpt')
+### config constants ###
+config = Config()
+database_root = config.database_root
+logs_path = config.get_log(task_name)
+root_folder = config.root_folder
+imagenet_ckpt = config.imagenet_ckpt
+###
 
 train_file = os.path.join(root_folder, 'seg_DatasetList', 'training_lesion_commonbb_nobackprop_3.txt')
 val_file = os.path.join(root_folder, 'seg_DatasetList', 'testing_lesion_commonbb_nobackprop_3.txt')

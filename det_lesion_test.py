@@ -11,18 +11,21 @@ import sys
 import tensorflow as tf
 slim = tf.contrib.slim
 import numpy as np
-root_folder = os.path.dirname(os.path.realpath(__file__))
-sys.path.append(os.path.abspath(root_folder))
 import det_lesion as detection
 from dataset.dataset_det import Dataset
+from config import Config
 
 gpu_id = 0
 
 task_name = 'det_lesion_ck'
 
-database_root = os.path.join(root_folder, 'LiTS_database')
-logs_path = os.path.join(root_folder, 'train_files', task_name, 'networks')
-result_root = os.path.join(root_folder, 'detection_results/')
+### config constants ###
+config = Config()
+database_root = config.database_root
+logs_path = config.get_log(task_name)
+result_root = config.get_result_root('detection_results/')
+root_folder = config.root_folder
+###
 
 model_name = os.path.join(logs_path, "det_lesion.ckpt")
 
