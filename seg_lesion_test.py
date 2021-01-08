@@ -11,13 +11,12 @@ import sys
 import tensorflow as tf
 slim = tf.contrib.slim
 import numpy as np
-root_folder = os.path.dirname(os.path.realpath(__file__))
-sys.path.append(os.path.abspath(root_folder))
 import seg_lesion as segmentation
 from dataset.dataset_seg import Dataset
 import utils.crop_to_image
 import utils.mask_with_liver
 import utils.det_filter
+from config import Config
 
 gpu_id = 0
 number_slices = 3
@@ -26,11 +25,15 @@ crops_list = 'crops_LiTS_gt.txt'
 det_results_list = 'detection_lesion_example'
 task_name = 'seg_lesion_ck'
 
+### config constants ###
+config = Config()
+database_root = config.database_root
+logs_path = config.get_log(task_name)
+result_root = config.get_result_root('results')
+root_folder = config.root_folder
+###
 
-database_root = os.path.join(root_folder, 'LiTS_database')
 liver_results_path = os.path.join(database_root, 'out_liver_results')
-logs_path = os.path.join(root_folder, 'train_files', task_name, 'networks')
-result_root = os.path.join(root_folder, 'results')
 model_name = os.path.join(logs_path, "seg_lesion.ckpt")
 
 test_file = os.path.join(root_folder, 'seg_DatasetList/testing_volume_3_crops.txt')

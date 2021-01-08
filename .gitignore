@@ -115,3 +115,15 @@ train_files/seg_liver_ck/networks/checkpoint
 train_files/seg_liver_ck/networks/seg_liver.ckpt.data-00000-of-00001
 train_files/seg_liver_ck/networks/seg_liver.ckpt.index
 train_files/seg_liver_ck/networks/seg_liver.ckpt.meta
+
+# macOS files
+.DS_Store
+*.DS_Store
+utils/.DS_Store
+
+# dataset
+*.nii
+.vscode/settings.json
+
+# Rishyak Env
+MyEnv/*
