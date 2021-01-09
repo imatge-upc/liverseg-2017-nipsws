@@ -1,9 +1,12 @@
-addpath('../../tools/nifti_library/');
+% Measures time
+tic;
+
+addpath('nifti_library/');
 
 %folder with .nii files 
-niftis_path = '../../Database/media/nas/01_Datasets/CT/LITS/Training Batch 1/';
+niftis_path = 'UnZip/';
 
-root_process_database = '../../LiTS_database/';
+root_process_database = 'LiTS_database/';
 folder_volumes = strcat(root_process_database, 'images_volumes/');
 folder_seg_liver = strcat(root_process_database, 'liver_seg/');
 folder_seg_item = strcat(root_process_database, 'item_seg/');
@@ -86,3 +89,7 @@ for l = 1:(length(filenames))
         end
     end
 end
+
+
+elapsedTime = toc;
+display(elapsedTime)

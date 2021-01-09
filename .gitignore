@@ -127,3 +127,6 @@ utils/.DS_Store
 
 # Rishyak Env
 MyEnv/*
+
+# Matlab nifti_library. Can be found at: https://www.mathworks.com/matlabcentral/fileexchange/8797-tools-for-nifti-and-analyze-image
+nifti_library/*
