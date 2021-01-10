@@ -199,8 +199,8 @@ if __name__ == "__main__":
     data_aug_options_sp = 8
     sample_bbs_train(crops_list_sp, output_file_name_sp, data_aug_options_sp)
 
-    ## Example of sampling bounding boxes around liver for tests images, when there are no labels
-    ## uncomment for using this option
-    # output_file_name_sp = 'test_patches'
-    # sample_bbs_test(crops_list_sp, output_file_name_sp)
+    # Example of sampling bounding boxes around liver for tests images, when there are no labels
+    # uncomment for using this option
+    output_file_name_sp = 'test_patches'
+    sample_bbs_test(crops_list_sp, output_file_name_sp)
     
