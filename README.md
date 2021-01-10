@@ -144,7 +144,7 @@ whre ```x1``` and ```x2``` are the coordinates of the upper-left vertex of the b
 In case you want to generate other lists, use the following script:
 
 ```bash
-cd utils/sampling
+cd utils/sampling_bb
 python sample_bbs.py
 ```
 
