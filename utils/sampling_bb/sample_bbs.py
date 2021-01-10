@@ -67,13 +67,14 @@ def sample_bbs_test(crops_list, output_file_name):
                         if (mina + mult*x) > 15.0 and ((mina + (x+1)*mult) < 512.0) and (minb + y*mult) > 15.0 and ((minb + (y+1)*mult) < 512.0):
                             a1 = mina + mult*x - 15.0
                             b1 = minb + y*mult - 15.0
-                        test_file.write(f'images_volumes/{file} {a1} {b1} 1 \n')
+                        test_file.write('images_volumes/{} {} {} 1 \n'.format(file, a1, b1))
     test_file.close()
 
 
 def sample_bbs_train(crops_list, output_file_name, data_aug_options):
 
-    """Samples bounding boxes around liver region for a train image. In this case, we will train two files, one with the positive bounding boxes
+    """
+    Samples bounding boxes around liver region for a train image. In this case, we will train two files, one with the positive bounding boxes
     and another with the negative bounding boxes.
     Args:
     crops_list: Textfile, each row with filename, boolean indicating if there is liver, x1, x2, y1, y2, zoom.
@@ -82,10 +83,15 @@ def sample_bbs_train(crops_list, output_file_name, data_aug_options):
         In total 4 text files will be generated. For training, a positive and a negative file, and the same for testing.
     """
 
-    train_positive_file = open(os.path.join(output_folder_path, 'training_positive_det_patches_' + output_file_name + '.txt'), 'w')
-    train_negative_file = open(os.path.join(output_folder_path, 'training_negative_det_patches_' + output_file_name + '.txt'), 'w')
-    test_positive_file = open(os.path.join(output_folder_path, 'testing_positive_det_patches_' + output_file_name + '.txt'), 'w')
-    test_negative_file = open(os.path.join(output_folder_path, 'testing_negative_det_patches_' + output_file_name + '.txt'), 'w')
+    # train_positive_file = open(os.path.join(output_folder_path, 'training_positive_det_patches_' + output_file_name + '.txt'), 'w')
+    # train_negative_file = open(os.path.join(output_folder_path, 'training_negative_det_patches_' + output_file_name + '.txt'), 'w')
+    # test_positive_file = open(os.path.join(output_folder_path, 'testing_positive_det_patches_' + output_file_name + '.txt'), 'w')
+    # test_negative_file = open(os.path.join(output_folder_path, 'testing_negative_det_patches_' + output_file_name + '.txt'), 'w')
+
+    train_positive_file = open(os.path.join(output_folder_path, 'OV_training_positive_det_patches_' + output_file_name + '.txt'), 'w')
+    train_negative_file = open(os.path.join(output_folder_path, 'OV_training_negative_det_patches_' + output_file_name + '.txt'), 'w')
+    test_positive_file = open(os.path.join(output_folder_path, 'OV_testing_positive_det_patches_' + output_file_name + '.txt'), 'w')
+    test_negative_file = open(os.path.join(output_folder_path, 'OV_testing_negative_det_patches_' + output_file_name + '.txt'), 'w')
 
     # read in bbs from txt file
     if crops_list is not None:
@@ -156,18 +162,18 @@ def sample_bbs_train(crops_list, output_file_name, data_aug_options):
                                 if pos_lesion > mult:
                                     if int(liver_seg_file.split('/')[-2]) < 105:
                                         for j in range(data_aug_options):
-                                            train_positive_file.write(f'images_volumes/{liver_seg_file} {a1} {b1} {j+1} \n')
+                                            train_positive_file.write('images_volumes/{} {} {} {} \n'.format(liver_seg_file, a1, b1, j + 1))
                                     else:
                                         for j in range(1):
-                                            test_positive_file.write(f'images_volumes/{liver_seg_file} {a1} {b1} {j+1} \n')
+                                            test_positive_file.write('images_volumes/{} {} {} {} \n'.format(liver_seg_file, a1, b1, j + 1))
 
                                 else:
                                     if int(liver_seg_file.split('/')[-2]) < 105:
                                         for j in range(data_aug_options):
-                                            train_negative_file.write(f'images_volumes/{liver_seg_file} {a1} {b1} {j+1} \n')
+                                            train_negative_file.write('images_volumes/{} {} {} {} \n'.format(liver_seg_file, a1, b1, j + 1))
                                     else:
                                         for j in range(1):
-                                            test_negative_file.write(f'images_volumes/{liver_seg_file} {a1} {b1} {j+1} \n')
+                                            test_negative_file.write('images_volumes/{} {} {} {} \n'.format(liver_seg_file, a1, b1, j + 1))
 
     train_positive_file.close()
     train_negative_file.close()
@@ -191,9 +197,10 @@ if __name__ == "__main__":
     output_file_name_sp = 'example'
     # all possible combinations of data augmentation
     data_aug_options_sp = 8
-    #sample_bbs_train(crops_list_sp, output_file_name_sp, data_aug_options_sp)
+    sample_bbs_train(crops_list_sp, output_file_name_sp, data_aug_options_sp)
 
     ## Example of sampling bounding boxes around liver for tests images, when there are no labels
     ## uncomment for using this option
     # output_file_name_sp = 'test_patches'
     # sample_bbs_test(crops_list_sp, output_file_name_sp)
+    
