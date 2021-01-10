@@ -10,7 +10,6 @@ import os
 import sys
 import tensorflow as tf
 slim = tf.contrib.slim
-sys.path.append(os.path.abspath(root_folder))
 import seg_liver as segmentation
 from dataset.dataset_seg import Dataset
 from config import Config
@@ -21,9 +20,15 @@ number_slices = 3
 # Training parameters
 batch_size = 1
 iter_mean_grad = 10
-max_training_iters_1 = 15000
-max_training_iters_2 = 30000
-max_training_iters_3 = 50000
+# max_training_iters_1 = 15000
+# max_training_iters_2 = 30000
+# max_training_iters_3 = 50000
+
+# Training for less than that ^
+max_training_iters_1 = 150
+max_training_iters_2 = 300
+max_training_iters_3 = 500
+
 save_step = 2000
 display_step = 2
 ini_learning_rate = 1e-8

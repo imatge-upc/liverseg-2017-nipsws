@@ -10,7 +10,7 @@ class Config:
         self.__database_root = 'LiTS_database'
 
         self.root_folder = os.path.dirname(os.path.realpath(__file__))
-        sys.path.append(os.path.abspath(root_folder))
+        sys.path.append(os.path.abspath(self.root_folder))
 
         self.database_root = os.path.join(self.root_folder, self.__database_root)
         
